@@ -1,29 +1,26 @@
 class Solution {
     public int countSubstrings(String s) {
-        int count =0;
-        String temp="";
-        for(int i=0;i<s.length();i++){
-            count++;
-            int l =i+1;
-            temp+=s.charAt(i);
-            while(l<s.length()){
-                temp+=s.charAt(l);
-                if(check(temp)) count++;
-                l++;
-            }
-            temp="";
+        int result = 0;
+        for(int i = 0; i < s.length(); i++) {
+            int even = countPalindromes(i, i + 1, s);
+            int odd = countPalindromes(i, i, s);
 
+            result += even + odd;
         }
-        return count;
+
+        return result;
     }
-    public boolean check(String s){
-        int l=0;
-        int r=s.length()-1;
-        while(l<=r){
-            if(s.charAt(l)!=s.charAt(r)) return false;
-            l++;
-            r--;
+
+    public  int countPalindromes(int left, int right, String s) {
+       int ans =0;
+       while(left>=0 && right<s.length()){
+        if(s.charAt(left)!=s.charAt(right)){
+            return ans;
         }
-        return true;
+        ans++;
+        left--;
+        right++;
+       }
+       return ans;
     }
 }
