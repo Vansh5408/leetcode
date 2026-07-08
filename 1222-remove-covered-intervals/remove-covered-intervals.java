@@ -1,35 +1,33 @@
 class Solution {
     public int removeCoveredIntervals(int[][] intervals) {
 
-        Arrays.sort(intervals, (a, b) -> {
-            if (a[0] == b[0])
-                return b[1] - a[1]; // larger end first
-            return a[0] - b[0];
-        });
+        int ans = 0;
+        int n = intervals.length;
 
-        int count = intervals.length;
+        for (int i = 0; i < n; i++) {
 
-        for (int i = 0; i < intervals.length - 1; i++) {
+            int s1 = intervals[i][0];
+            int e1 = intervals[i][1];
 
-            if (intervals[i][0] == -1)
-                continue;
+            boolean flag = false;
 
-            for (int j = i + 1; j < intervals.length; j++) {
+            for (int j = 0; j < n; j++) {
+                int s2 = intervals[j][0];
+                int e2 = intervals[j][1];
 
-                if (intervals[j][0] == -1)
-                    continue;
-
-                // i covers j
-                if (intervals[i][0] <= intervals[j][0]
-                        && intervals[i][1] >= intervals[j][1]) {
-
-                    intervals[j][0] = -1;
-                    intervals[j][1] = -1;
-                    count--;
+                if (i != j && s1 >= s2 && e1 <= e2) {
+                    flag = true;
+                    break;
                 }
+
+            }
+
+            if (!flag) {
+                ans++;
             }
         }
 
-        return count;
+        return ans;
+
     }
 }
