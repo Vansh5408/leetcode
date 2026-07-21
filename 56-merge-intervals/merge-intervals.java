@@ -1,7 +1,7 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals,(a,b)->{
-            if(a[0]==b[0]) return b[0]-a[0];
+            if(a[0]==b[0]) return b[1]-a[1];
             else return a[0]-b[0];
         });
         ArrayList<ArrayList<Integer>>ans = new ArrayList<>();
