@@ -1,22 +1,32 @@
 class Solution {
 
+    Integer[][] dp = new Integer[21][2001];
+
     public int findTargetSumWays(int[] nums, int target) {
         return ways(nums, target, 0, 0);
     }
 
     public int ways(int[] nums, int target, int sum, int i) {
 
+        // Base Case
         if (i == nums.length) {
-            if (sum == target)
-                return 1;
-            else
-                return 0;
+            return (sum == target) ? 1 : 0;
         }
 
-        int first = ways(nums, target, sum - nums[i], i + 1);
+        // Already calculated
+        if (dp[i][sum + 1000] != null) {
+            return dp[i][sum + 1000];
+        }
 
-        int second = ways(nums, target, sum + nums[i], i + 1);
+        // Choose +
+        int plus = ways(nums, target, sum + nums[i], i + 1);
 
-        return first + second;
+        // Choose -
+        int minus = ways(nums, target, sum - nums[i], i + 1);
+
+        // Store answer
+        dp[i][sum + 1000] = plus + minus;
+
+        return dp[i][sum + 1000];
     }
 }
