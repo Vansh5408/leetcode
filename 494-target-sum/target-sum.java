@@ -1,32 +1,35 @@
 class Solution {
 
-    Integer[][] dp = new Integer[21][2001];
-
     public int findTargetSumWays(int[] nums, int target) {
-        return ways(nums, target, 0, 0);
+
+        int sum = 0;
+        for (int x : nums)
+            sum += x;
+
+        if (Math.abs(target) > sum)
+            return 0;
+
+        if ((sum + target) % 2 != 0)
+            return 0;
+
+        int req = (sum + target) / 2;
+
+        return find(nums, req, 0);
     }
 
-    public int ways(int[] nums, int target, int sum, int i) {
+    public int find(int[] arr, int sum, int i) {
 
-        // Base Case
-        if (i == nums.length) {
-            return (sum == target) ? 1 : 0;
+        if (i == arr.length) {
+            return sum == 0 ? 1 : 0;
         }
 
-        // Already calculated
-        if (dp[i][sum + 1000] != null) {
-            return dp[i][sum + 1000];
-        }
+        int first = 0;
 
-        // Choose +
-        int plus = ways(nums, target, sum + nums[i], i + 1);
+        if (arr[i] <= sum)
+            first = find(arr, sum - arr[i], i + 1);
 
-        // Choose -
-        int minus = ways(nums, target, sum - nums[i], i + 1);
+        int second = find(arr, sum, i + 1);
 
-        // Store answer
-        dp[i][sum + 1000] = plus + minus;
-
-        return dp[i][sum + 1000];
+        return first + second;
     }
 }
