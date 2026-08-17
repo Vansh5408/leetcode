@@ -10,11 +10,8 @@ class Solution {
         return;
     }
     for(int i=idx;i<=n;i++){
-        if(l.size()!=0 && i==idx){
-            continue;
-        }
         l.add(i);
-        genrate(ans,l,i,n,k);
+        genrate(ans,l,i+1,n,k);
         l.remove(l.size()-1);
     }
 }
