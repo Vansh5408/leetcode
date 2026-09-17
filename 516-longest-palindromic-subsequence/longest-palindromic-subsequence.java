@@ -4,23 +4,23 @@ class Solution {
         for(int []arr:dp){
             Arrays.fill(arr,-1);
         }
-        return palindrome(s,0,s.length()-1,dp);
+        return subsequence(s,0,s.length()-1,dp);
     }
-    public int palindrome(String s , int l, int r,int [][]dp){
+    public int subsequence(String s , int l, int r,int [][]dp){
         if(l>r) return 0;
-        if(l==r){
-            return 1;
-        }
+        if(l==r) return 1;
+        int ans=0;
         if(dp[l][r]!=-1){
             return dp[l][r];
         }
         if(s.charAt(l)==s.charAt(r)){
-            return dp[l][r]=2+palindrome(s,l+1,r-1,dp);
+            return ans+=2+subsequence(s,l+1,r-1,dp);
         }
         else{
-            int first = palindrome(s,l+1,r,dp);
-            int second = palindrome(s,l,r-1,dp);
-            return dp[l][r]= Math.max(first,second);
+            int first=subsequence(s,l+1,r,dp);
+            int second=subsequence(s,l,r-1,dp);
+            ans+=Math.max(first,second);
         }
+        return dp[l][r]=ans;
     }
 }
