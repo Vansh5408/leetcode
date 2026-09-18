@@ -11,10 +11,10 @@ class Solution {
     public int lis(int i,int []arr,int []dp){
         if(i==arr.length) return 0;
         int ans =1;
-        if(dp[i]!=-1){
+        for(int j=i+1;j<arr.length;j++){
+             if(dp[i]!=-1){
             return dp[i];
         }
-        for(int j=i+1;j<arr.length;j++){
             if(arr[i]<arr[j]){
                 int count =1+lis(j,arr,dp);
                 ans=Math.max(ans,count);
